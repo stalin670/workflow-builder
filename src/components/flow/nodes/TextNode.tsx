@@ -1,16 +1,30 @@
 "use client";
 
 import { Handle, Position, NodeProps } from "reactflow";
+import { useEffect, useRef } from "react";
+import { useFlowStore } from "@/store/flowStore";
 
-export default function TextNode({ data }: NodeProps) {
+export default function TextNode({ id, data }: NodeProps) {
+    const ref = useRef<HTMLTextAreaElement>(null);
+    const updateNodeData = useFlowStore((s) => s.updateNodeData);
+
+    useEffect(() => {
+        if (!ref.current) return;
+        ref.current.style.height = "auto";
+        ref.current.style.height = ref.current.scrollHeight + "px";
+    }, [data.text]);
+
     return (
-        <div className="bg-[#1c2240] p-3 rounded w-48">
-            <p className="text-xs mb-1 text-gray-300">Text Input</p>
+        <div className="bg-[#1c2240] p-3 rounded w-52">
+            <p className="text-xs text-textMuted mb-1 text-gray-300">Text Input</p>
             <textarea
-                className="w-full bg-transparent border border-gray-600 rounded p-1 text-sm resize-none"
+                ref={ref}
+                className="w-full bg-transparent text-sm outline-none resize-none overflow-hidden"
                 placeholder="Enter text..."
                 value={data.text || ""}
-                onChange={(e) => data.onChange(e.target.value)}
+                onChange={(e) =>
+                    updateNodeData(id, { text: e.target.value })
+                }
             />
 
             <Handle type="source" position={Position.Right} />

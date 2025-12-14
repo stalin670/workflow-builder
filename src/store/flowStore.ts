@@ -45,6 +45,8 @@ type FlowState = {
     onNodesChange: (changes: any) => void;
     onEdgesChange: (changes: any) => void;
     onConnect: (connection: any) => void;
+    updateNodeData: (id: string, data: any) => void;
+    addNode: (type: "text" | "image" | "llm") => void;
 };
 
 export const useFlowStore = create<FlowState>((set, get) => ({
@@ -65,6 +67,35 @@ export const useFlowStore = create<FlowState>((set, get) => ({
         set({
             edges: addEdge(connection, get().edges),
         }),
+    updateNodeData: (id: string, data: any) =>
+        set((state) => ({
+            nodes: state.nodes.map((node) =>
+                node.id === id
+                    ? { ...node, data: { ...node.data, ...data } }
+                    : node
+            ),
+        })),
+    addNode: (type: "text" | "image" | "llm") =>
+        set((state) => ({
+            nodes: [
+                ...state.nodes,
+                {
+                    id: crypto.randomUUID(),
+                    type,
+                    position: {
+                        x: 200 + Math.random() * 200,
+                        y: 200 + Math.random() * 200,
+                    },
+                    data:
+                        type === "text"
+                            ? { text: "", onChange: () => { } }
+                            : type === "image"
+                                ? { file: null }
+                                : {},
+                },
+            ],
+        })),
+
 }));
 
 
