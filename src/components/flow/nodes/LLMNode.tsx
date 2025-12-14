@@ -1,10 +1,16 @@
 import { Handle, Position, NodeProps } from "reactflow";
+import { useState } from "react";
 import { useFlowStore } from "@/store/flowStore";
 
 export default function LLMNode({ id }: NodeProps) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const { nodes, edges } = useFlowStore();
 
     const handleRun = async () => {
+        setLoading(true);
+        setError("");
         const incomingEdges = edges.filter((e) => e.target === id);
 
         const inputNodes = incomingEdges.map((edge) =>
@@ -26,17 +32,22 @@ export default function LLMNode({ id }: NodeProps) {
             }
         });
 
-        const res = await fetch("/api/gemini", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                text: textInputs.join("\n"),
-            }),
-        });
-
-        const data = await res.json();
-        console.log(data);
-        // alert(data.output);
+        try {
+            const res = await fetch("/api/gemini", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    text: textInputs.join("\n"),
+                }),
+            });
+            const data = await res.json();
+            console.log(data);
+            // alert(data.output);
+        } catch (error) {
+            setError("Error running LLM");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -45,6 +56,7 @@ export default function LLMNode({ id }: NodeProps) {
 
             <button
                 onClick={handleRun}
+                disabled={loading}
                 className="
                 nodrag pointer-events-auto
                 bg-blue-600
@@ -59,10 +71,11 @@ export default function LLMNode({ id }: NodeProps) {
                 w-full
                 p-1.5
                 rounded
+                disabled:opacity-50
                 text-white
                 pointer-cursor"
             >
-                Run
+                {loading ? "Running..." : "Run"}
             </button>
 
 
