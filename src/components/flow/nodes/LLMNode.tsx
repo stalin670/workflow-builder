@@ -26,7 +26,7 @@ export default function LLMNode({ id }: NodeProps) {
             }
         });
 
-        const res = await fetch("/api/run-llm", {
+        const res = await fetch("/api/gemini", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -35,21 +35,36 @@ export default function LLMNode({ id }: NodeProps) {
         });
 
         const data = await res.json();
-        alert(data.output);
+        console.log(data);
+        // alert(data.output);
     };
-
-    const data = { onRun: handleRun };
 
     return (
         <div className="bg-[#272d55] p-3 rounded w-56">
             <h3 className="text-sm mb-2">Run Gemini</h3>
 
             <button
-                onClick={data.onRun}
-                className="bg-blue-600 w-full p-1 rounded"
+                onClick={handleRun}
+                className="
+                nodrag pointer-events-auto
+                bg-blue-600
+                hover:bg-blue-700
+                shadow-sm
+                hover:shadow-md
+                active:scale-[0.98]
+                active:shadow-sm
+                transition
+                duration-200
+                ease-in-out
+                w-full
+                p-1.5
+                rounded
+                text-white
+                pointer-cursor"
             >
                 Run
             </button>
+
 
             <Handle type="target" position={Position.Left} />
         </div>
