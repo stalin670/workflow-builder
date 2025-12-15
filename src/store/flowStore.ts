@@ -10,13 +10,14 @@ import {
     EdgeChange,
     Connection,
 } from "reactflow";
+import { file } from "zod";
 
 const initialNodes: Node[] = [
     {
         id: "1",
         type: "image",
         position: { x: 100, y: 100 },
-        data: { file: null },
+        data: { file: null, preview: null, filename: null },
     },
     {
         id: "2",
@@ -90,7 +91,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
                         type === "text"
                             ? { text: "", onChange: () => { } }
                             : type === "image"
-                                ? { file: null }
+                                ? { file: null, preview: null, fileName: null }
                                 : {},
                 },
             ],
