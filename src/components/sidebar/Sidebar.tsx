@@ -28,6 +28,16 @@ export default function Sidebar() {
                     🤖 Run Any LLM
                 </button>
             </div>
+            <button
+                onClick={() => {
+                    localStorage.removeItem("userId");
+                    window.location.href = "/login";
+                }}
+                className="mt-6 w-full text-sm text-red-400"
+            >
+                Logout
+            </button>
+
         </div>
     );
 }
