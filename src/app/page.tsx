@@ -4,6 +4,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import FlowCanvas from "@/components/flow/FlowCanvas";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Toolbar from "@/components/Toolbar";
 
 export default function Home() {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function Home() {
       {!collapsed &&
         <Sidebar />
       }
+      <Toolbar />
       <FlowCanvas />
     </div>
   );
