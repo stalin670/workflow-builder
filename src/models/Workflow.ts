@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 
 const WorkflowSchema = new mongoose.Schema(
     {
-        userId: { type: mongoose.Schema.Types.ObjectId, required: true },
-        name: String,
-        nodes: Array,
-        edges: Array,
+        name: { type: String, default: "Untitled Workflow" },
+        nodes: { type: Array, required: true },
+        edges: { type: Array, required: true },
     },
     { timestamps: true }
 );
 
-export default mongoose.models.Workflow ||
+const Workflow = mongoose.models.Workflow ||
     mongoose.model("Workflow", WorkflowSchema);
+
+export default Workflow;
