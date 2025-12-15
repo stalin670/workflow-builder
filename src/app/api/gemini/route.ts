@@ -12,10 +12,11 @@ export async function POST(req: Request) {
 
     try {
         const body = BodySchema.parse(await req.json());
+        // const body = await req.json();
 
         const apiKey = process.env.GEMINI_API_KEY;
 
-        // console.log(apiKey);
+        console.log(apiKey);
         if (!apiKey) {
 
             return NextResponse.json(
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
             );
         }
 
-        // console.log(req.json());
+        console.log(body);
 
         const prompt = body.text;
 
