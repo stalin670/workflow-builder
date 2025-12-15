@@ -93,6 +93,10 @@ type FlowState = {
 
     undo: () => void;
     redo: () => void;
+
+    loadWorkflow: (nodes: Node[], edges: Edge[]) => void;
+    exportWorkflow: () => { nodes: Node[]; edges: Edge[] };
+
 };
 
 export const useFlowStore = create<FlowState>((set, get) => ({
@@ -241,4 +245,18 @@ export const useFlowStore = create<FlowState>((set, get) => ({
                 future: newFuture,
             };
         }),
+
+    loadWorkflow: (nodes, edges) =>
+        set((state) => ({
+            nodes,
+            edges,
+            past: [],
+            future: [],
+        })),
+
+    exportWorkflow: () => ({
+        nodes: get().nodes,
+        edges: get().edges,
+    }),
+
 }));
