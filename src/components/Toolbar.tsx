@@ -57,6 +57,17 @@ export default function Toolbar() {
         URL.revokeObjectURL(url);
     };
 
+    const handleImport = (file?: File) => {
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            const data = JSON.parse(reader.result as string);
+            loadWorkflow(data.nodes, data.edges);
+        };
+        reader.readAsText(file);
+    };
+
     return (
         <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 bg-[#12172b] border border-gray-700 rounded px-2 py-1 z-50">
             <button
@@ -69,6 +80,17 @@ export default function Toolbar() {
                 className="btn">
                 📥 Load
             </button>
+            <label className="btn cursor-pointer">
+                📂 Import
+                <input
+                    type="file"
+                    accept=".json"
+                    hidden
+                    onChange={(e) =>
+                        handleImport(e.target.files?.[0])
+                    }
+                />
+            </label>
             <button onClick={handleExport} className="btn">
                 📤 Export
             </button>
