@@ -4,23 +4,33 @@ import { useFlowStore } from "@/store/flowStore";
 
 export default function ImageNode({ data, id }: NodeProps) {
     const { updateNodeData, deleteNode } = useFlowStore();
-    const [preview, setPreview] = useState<string | null>(data.preview || null);
+    const [preview, setPreview] = useState<string | null>(data.base64 || null);
 
     useEffect(() => {
-        if (data.preview) setPreview(data.preview);
-    }, [data.preview]);
+        if (data.base64) setPreview(data.base64);
+    }, [data.base64]);
 
-    const handleFileUpload = (file?: File) => {
+    const fileToBase64 = (file: File): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+
+    const handleFileUpload = async (file?: File) => {
         if (!file) return;
 
-        const previewUrl = URL.createObjectURL(file);
-        setPreview(previewUrl);
+        const base64 = await fileToBase64(file);
 
         updateNodeData(id, {
-            file,
-            preview: previewUrl,
+            label: data.label || "Image",
+            base64,
+            mimeType: file.type,
             fileName: file.name,
         });
+
+        setPreview(base64);
     };
 
     return (
@@ -51,6 +61,7 @@ export default function ImageNode({ data, id }: NodeProps) {
                 <img
                     src={preview}
                     className="mt-2 rounded max-h-40 object-cover"
+                    alt="preview"
                 />
             )}
 
