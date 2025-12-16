@@ -19,6 +19,19 @@ const nodeTypes = {
     llm: LLMNode,
 };
 
+const getMiniMapNodeColor = (node: any) => {
+    if (node.type === "text") {
+        return node.data?.mode === "output"
+            ? "#f59e0b"
+            : "#3b82f6";
+    }
+
+    if (node.type === "image") return "#22c55e";
+    if (node.type === "llm") return "#a855f7";
+
+    return "#64748b";
+};
+
 export default function FlowCanvas() {
     const {
         nodes,
@@ -42,7 +55,13 @@ export default function FlowCanvas() {
                     variant={BackgroundVariant.Dots}
                     gap={16} size={1} />
                 <Controls />
-                <MiniMap />
+                <MiniMap
+                    pannable
+                    zoomable
+                    nodeColor={getMiniMapNodeColor}
+                    nodeStrokeWidth={2}
+                    maskColor="rgba(0,0,0,0.6)"
+                />
             </ReactFlow>
         </div>
     );
