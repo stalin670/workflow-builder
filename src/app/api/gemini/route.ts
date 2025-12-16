@@ -1,18 +1,52 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { z } from "zod";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+const GeminiPartSchema = z.union([
+    z.object({
+        text: z.string().min(1),
+    }),
+    z.object({
+        inlineData: z.object({
+            data: z.string().min(1),
+            mimeType: z.string().min(1),
+        }),
+    }),
+]);
+
+const GeminiRequestSchema = z.object({
+    parts: z.array(GeminiPartSchema).min(1),
+});
+
+function cleanLLMText(text: string) {
+    return text
+        .replace(/\*\*(.*?)\*\*/g, "$1")
+        .replace(/\*(.*?)\*/g, "$1")
+
+        .replace(/^#+\s*/gm, "")
+
+        .replace(/^\s*[-•]\s*/gm, "")
+
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+}
+
 export async function POST(req: Request) {
     try {
-        const { parts } = await req.json();
+        const body = await req.json();
 
-        if (!parts || !Array.isArray(parts)) {
+        const parsed = GeminiRequestSchema.safeParse(body);
+
+        if (!parsed.success) {
             return NextResponse.json(
-                { error: "Invalid parts payload" },
+                { error: "Invalid request body" },
                 { status: 400 }
             );
         }
+
+        const { parts } = parsed.data;
 
         const model = genAI.getGenerativeModel({
             model: "gemini-2.5-flash",
@@ -22,13 +56,23 @@ export async function POST(req: Request) {
             contents: [
                 {
                     role: "user",
-                    parts,
+                    parts: [
+                        {
+                            text:
+                                "Respond in clean, plain English. " +
+                                "Do not use markdown, bullet points, or special symbols. " +
+                                "Write naturally like a human product description.\n\n",
+                        },
+                        ...parts,
+                    ],
                 },
             ],
         });
 
-        const response = await result.response;
-        const output = response.text();
+        const res = result.response;
+        const txt = res.text();
+
+        const output = cleanLLMText(txt);
 
         return NextResponse.json({ output });
     } catch (err: any) {
