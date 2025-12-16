@@ -1,12 +1,15 @@
 "use client";
 
 import { useFlowStore } from "@/store/flowStore";
+import { useToastStore } from "@/store/toastStore";
 
 export default function Toolbar() {
     const undo = useFlowStore((s) => s.undo);
     const redo = useFlowStore((s) => s.redo);
     const canUndo = useFlowStore((s) => s.past.length > 0);
     const canRedo = useFlowStore((s) => s.future.length > 0);
+
+    const showToast = useToastStore((s) => s.showToast);
 
     const {
         nodes,
@@ -17,17 +20,22 @@ export default function Toolbar() {
 
     const handleSave = async () => {
         console.log(nodes);
-        await fetch("/api/workflow/save", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name: "My Workflow",
-                nodes,
-                edges,
-            }),
-        });
+        try {
+            await fetch("/api/workflow/save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: "My Workflow",
+                    nodes,
+                    edges,
+                }),
+            });
 
-        alert("Workflow saved");
+            showToast("success", "Workflow Saved!");
+        }
+        catch (err) {
+            showToast("error", "Failed to save workflow");
+        }
     };
 
     const handleLoad = async () => {
@@ -35,7 +43,11 @@ export default function Toolbar() {
         const data = await res.json();
 
         if (data.nodes && data.edges) {
+            showToast("success", "Workflow Loaded!");
             loadWorkflow(data.nodes, data.edges);
+        }
+        else {
+            showToast("error", "Failed to load workflow");
         }
     };
 
