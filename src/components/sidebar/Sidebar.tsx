@@ -25,7 +25,7 @@ export default function Sidebar() {
                 <button
                     onClick={() => addNode("llm")}
                     className="w-full border-2 border-[#444448] hover:bg-black p-2 rounded">
-                    🤖 Run Any LLM
+                    🤖 Run LLM
                 </button>
             </div>
             <button
