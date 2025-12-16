@@ -50,9 +50,17 @@ export default function FlowCanvas() {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 fitView
+                defaultEdgeOptions={{
+                    style: {
+                        stroke: "#F09FFA",
+                        strokeWidth: 2,
+                    },
+                    animated: true,
+                }}
             >
                 <Background
                     variant={BackgroundVariant.Dots}
+                    className="bg-[#0E0E13]"
                     gap={16} size={1} />
                 <Controls />
                 <MiniMap
