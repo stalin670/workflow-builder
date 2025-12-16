@@ -81,18 +81,18 @@ export default function Toolbar() {
     };
 
     return (
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 bg-[#12172b] border border-gray-700 rounded px-2 py-1 z-50">
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 bg-[#212126] border border-gray-700 rounded px-2 py-1 z-50">
             <button
                 onClick={handleSave}
-                className="btn">
+                className="btn hover:text-green-400">
                 💾 Save
             </button>
             <button
                 onClick={handleLoad}
-                className="btn">
+                className="btn hover:text-green-400">
                 📥 Load
             </button>
-            <label className="btn cursor-pointer">
+            <label className="btn cursor-pointer hover:text-green-400">
                 📂 Import
                 <input
                     type="file"
@@ -103,13 +103,13 @@ export default function Toolbar() {
                     }
                 />
             </label>
-            <button onClick={handleExport} className="btn">
+            <button onClick={handleExport} className="btn hover:text-green-400">
                 📤 Export
             </button>
             <button
                 onClick={undo}
                 disabled={!canUndo}
-                className="px-3 py-1 text-sm rounded bg-[#1c2240] disabled:opacity-40"
+                className="px-3 py-1 text-sm rounded bg-[#1c2240] hover:text-green-400 disabled:opacity-10"
             >
                 ⟲ Undo
             </button>
@@ -117,7 +117,7 @@ export default function Toolbar() {
             <button
                 onClick={redo}
                 disabled={!canRedo}
-                className="px-3 py-1 text-sm rounded bg-[#1c2240] disabled:opacity-40"
+                className="px-3 py-1 text-sm rounded bg-[#1c2240] hover:text-green-400 disabled:opacity-40"
             >
                 ⟳ Redo
             </button>
