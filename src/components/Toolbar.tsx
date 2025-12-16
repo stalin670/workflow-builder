@@ -8,8 +8,35 @@ export default function Toolbar() {
     const canUndo = useFlowStore((s) => s.past.length > 0);
     const canRedo = useFlowStore((s) => s.future.length > 0);
 
+    const {
+        nodes,
+        edges,
+        loadWorkflow,
+        exportWorkflow,
+    } = useFlowStore();
+
+    const handleSave = async () => {
+        console.log(nodes);
+        await fetch("/api/workflow/save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: "My Workflow",
+                nodes,
+                edges,
+            }),
+        });
+
+        alert("Workflow saved");
+    };
+
     return (
         <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 bg-[#12172b] border border-gray-700 rounded px-2 py-1 z-50">
+            <button
+                onClick={handleSave}
+                className="btn">
+                💾 Save
+            </button>
             <button
                 onClick={undo}
                 disabled={!canUndo}
