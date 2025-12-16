@@ -24,6 +24,7 @@ export default function LoginPage() {
 
         if (!res.ok) {
             setError(data.error || "Login failed");
+            showToast("error", "Login failed!");
             return;
         }
 
