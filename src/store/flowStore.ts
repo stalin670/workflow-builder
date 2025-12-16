@@ -20,6 +20,8 @@ const initialNodes: Node[] = [
         data: {
             label: "Image",
             file: null,
+            base64: null,
+            mimeType: null,
             preview: null,
             fileName: null,
         },
@@ -99,6 +101,14 @@ type FlowState = {
 
 };
 
+type ImageNodeData = {
+    label?: string;
+    preview?: string | null;
+    base64?: string | null;
+    mimeType?: string | null;
+    fileName?: string | null;
+};
+
 export const useFlowStore = create<FlowState>((set, get) => ({
     nodes: initialNodes,
     edges: initialEdges,
@@ -164,8 +174,10 @@ export const useFlowStore = create<FlowState>((set, get) => ({
                         ? {
                             label: "Image",
                             file: null,
+                            base64: null,
                             preview: null,
                             fileName: null,
+                            mimeType: null,
                         }
                         : { label: "LLM", prompt: "" },
         };
