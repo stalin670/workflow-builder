@@ -87,7 +87,7 @@ export default function LLMNode({ id, data }: NodeProps) {
     };
 
     return (
-        <div className="bg-[#272d55] p-3 rounded w-64 border border-gray-600 relative">
+        <div className="bg-[#353539] p-3 rounded w-64 border border-gray-600 relative">
             <button
                 onClick={() => deleteNode(id)}
                 className="absolute top-1 right-1 text-gray-400 hover:text-red-400 text-xs"
@@ -115,7 +115,7 @@ export default function LLMNode({ id, data }: NodeProps) {
             <button
                 onClick={handleRun}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 w-full p-1.5 rounded disabled:opacity-50"
+                className="bg-[#212126] hover:bg-black w-full p-1.5 rounded disabled:opacity-50"
             >
                 {loading ? "Running..." : "Run"}
             </button>

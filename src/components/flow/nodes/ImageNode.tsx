@@ -34,7 +34,7 @@ export default function ImageNode({ data, id }: NodeProps) {
     };
 
     return (
-        <div className="bg-[#1c2240] p-3 rounded w-56 border border-gray-600 relative">
+        <div className="bg-[#353539] p-3 rounded w-56 border border-gray-600 relative">
             <button
                 onClick={() => deleteNode(id)}
                 className="absolute top-1 right-1 text-gray-400 hover:text-red-400 text-xs"
@@ -51,7 +51,7 @@ export default function ImageNode({ data, id }: NodeProps) {
             />
 
             <div className="flex gap-2 mb-2">
-                <label className="flex-1 text-xs text-center bg-[#272d55] hover:bg-[#323a6a] rounded py-1 cursor-pointer">
+                <label className="flex-1 text-xs text-center bg-[#212126] hover:bg-black rounded py-1 cursor-pointer">
                     📁 Upload
                     <input
                         type="file"
@@ -61,7 +61,7 @@ export default function ImageNode({ data, id }: NodeProps) {
                     />
                 </label>
 
-                <label className="flex-1 text-xs text-center bg-[#272d55] hover:bg-[#323a6a] rounded py-1 cursor-pointer">
+                <label className="flex-1 text-xs text-center bg-[#212126] hover:bg-black rounded py-1 cursor-pointer">
                     📷 Camera
                     <input
                         type="file"

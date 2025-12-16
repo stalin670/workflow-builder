@@ -19,7 +19,7 @@ export default function TextNode({ id, data }: NodeProps) {
     }, [data.text, isOutput]);
 
     return (
-        <div className="bg-[#1c2240] p-3 rounded w-64 border border-gray-600 relative">
+        <div className="bg-[#353539] p-3 rounded w-64 border border-gray-600 relative">
             <button
                 onClick={() => deleteNode(id)}
                 className="absolute top-1 right-1 text-gray-400 hover:text-red-400 text-xs"
