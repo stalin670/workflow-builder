@@ -50,12 +50,28 @@ export default function ImageNode({ data, id }: NodeProps) {
                 className="w-full bg-transparent text-xs text-gray-300 mb-2 outline-none border-b border-gray-600"
             />
 
-            <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleFileUpload(e.target.files?.[0])}
-                className="text-xs w-full"
-            />
+            <div className="flex gap-2 mb-2">
+                <label className="flex-1 text-xs text-center bg-[#272d55] hover:bg-[#323a6a] rounded py-1 cursor-pointer">
+                    📁 Upload
+                    <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={(e) => handleFileUpload(e.target.files?.[0])}
+                    />
+                </label>
+
+                <label className="flex-1 text-xs text-center bg-[#272d55] hover:bg-[#323a6a] rounded py-1 cursor-pointer">
+                    📷 Camera
+                    <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        hidden
+                        onChange={(e) => handleFileUpload(e.target.files?.[0])}
+                    />
+                </label>
+            </div>
 
             {preview && (
                 <img
