@@ -30,12 +30,26 @@ export default function Toolbar() {
         alert("Workflow saved");
     };
 
+    const handleLoad = async () => {
+        const res = await fetch("/api/workflow/load");
+        const data = await res.json();
+
+        if (data.nodes && data.edges) {
+            loadWorkflow(data.nodes, data.edges);
+        }
+    };
+
     return (
         <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 bg-[#12172b] border border-gray-700 rounded px-2 py-1 z-50">
             <button
                 onClick={handleSave}
                 className="btn">
                 💾 Save
+            </button>
+            <button
+                onClick={handleLoad}
+                className="btn">
+                📥 Load
             </button>
             <button
                 onClick={undo}
