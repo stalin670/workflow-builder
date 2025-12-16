@@ -3,10 +3,12 @@
 import { Handle, Position, NodeProps } from "reactflow";
 import { useState } from "react";
 import { useFlowStore } from "@/store/flowStore";
+import { useToastStore } from "@/store/toastStore";
 
 export default function LLMNode({ id, data }: NodeProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const showToast = useToastStore((s) => s.showToast);
 
     const {
         nodes,
@@ -69,12 +71,15 @@ export default function LLMNode({ id, data }: NodeProps) {
             const result = await res.json();
 
             if (!res.ok) {
+                showToast("error", result.error || "Gemini error");
                 throw new Error(result.error || "Gemini error");
             }
 
+            showToast("success", "LLM run successful");
             addOutputNode(id, result.output);
         } catch (err) {
             console.error(err);
+            showToast("error", "Error running LLM");
             setError("Error running LLM");
         } finally {
             setLoading(false);
