@@ -101,14 +101,6 @@ type FlowState = {
 
 };
 
-type ImageNodeData = {
-    label?: string;
-    preview?: string | null;
-    base64?: string | null;
-    mimeType?: string | null;
-    fileName?: string | null;
-};
-
 export const useFlowStore = create<FlowState>((set, get) => ({
     nodes: initialNodes,
     edges: initialEdges,
