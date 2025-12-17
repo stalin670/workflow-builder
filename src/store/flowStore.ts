@@ -32,7 +32,7 @@ const initialNodes: Node[] = [
         position: { x: -100, y: 250 },
         data: {
             label: "Text",
-            text: "Product name & specs",
+            text: "iPhone 15 Pro Max, 256GB, Silver",
             mode: "input",
         },
     },
