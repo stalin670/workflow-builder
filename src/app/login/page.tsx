@@ -9,8 +9,8 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const showToast = useToastStore((s) => s.showToast);
     const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("amit@gmail.com");
+    const [password, setPassword] = useState("12345");
     const [error, setError] = useState("");
 
     const handleLogin = async () => {
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
                 <input
                     className="w-full mb-3 p-2 bg-node border border-border rounded"
-                    placeholder="Email"
+                    placeholder="amit@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -51,7 +51,7 @@ export default function LoginPage() {
                 <input
                     type="password"
                     className="w-full mb-3 p-2 bg-node border border-border rounded"
-                    placeholder="Password"
+                    placeholder="12345"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
