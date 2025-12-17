@@ -126,6 +126,7 @@ store/
 ## 💻 Database Schema
 
 ### User Collection
+![Image](https://github.com/user-attachments/assets/33ef5695-66cb-4c6d-a3d6-b006bba89fa9)
 
 * **email**: User email (unique)
 * **password**: User password
@@ -134,7 +135,7 @@ store/
 ---
 
 ### Workflow Collection
-
+![Image](https://github.com/user-attachments/assets/dac4a32e-04ee-4cd0-85d7-e0800a3bb33e)
 * **name**: Workflow name
 * **nodes**: Array of React Flow nodes
 * **edges**: Array of React Flow edges
@@ -162,6 +163,8 @@ store/
 ---
 
 ### Workflow Management
+![Image](https://github.com/user-attachments/assets/2961e2c2-73ce-4f36-af89-9fd12203e408)
+![Image](https://github.com/user-attachments/assets/0009d84d-8a45-4aa7-b804-89f32ee8020a)
 
 * `POST /api/workflow/save` – Save workflow state
 * `GET /api/workflow/load` – Load latest workflow
