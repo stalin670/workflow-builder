@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useToastStore } from "@/store/toastStore";
 
 export default function SignupPage() {
+    const [loading, setLoading] = useState(false);
     const showToast = useToastStore((s) => s.showToast);
     const router = useRouter();
     const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function SignupPage() {
 
     const handleSignup = async () => {
         setError("");
+        setLoading(true);
 
         const res = await fetch("/api/auth/signup", {
             method: "POST",
@@ -59,9 +61,10 @@ export default function SignupPage() {
 
                 <button
                     onClick={handleSignup}
+                    disabled={loading}
                     className="w-full bg-accent p-2 rounded hover:bg-indigo-500"
                 >
-                    Sign Up
+                    {loading ? "Signing up..." : "Sign Up"}
                 </button>
 
                 <p className="text-xs text-center mt-4 text-textMuted">

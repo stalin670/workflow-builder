@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToastStore } from "@/store/toastStore";
+import { set } from "mongoose";
 
 export default function LoginPage() {
+    const [loading, setLoading] = useState(false);
     const showToast = useToastStore((s) => s.showToast);
     const router = useRouter();
     const [email, setEmail] = useState("");
@@ -13,6 +15,7 @@ export default function LoginPage() {
 
     const handleLogin = async () => {
         setError("");
+        setLoading(true);
 
         const res = await fetch("/api/auth/login", {
             method: "POST",
@@ -59,9 +62,10 @@ export default function LoginPage() {
 
                 <button
                     onClick={handleLogin}
+                    disabled={loading}
                     className="w-full bg-accent p-2 rounded hover:bg-indigo-500"
                 >
-                    Login
+                    {loading ? "Logging in..." : "Login"}
                 </button>
 
                 <p className="text-xs text-center mt-4 text-textMuted">
