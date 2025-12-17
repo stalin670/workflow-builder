@@ -33,7 +33,7 @@ export default function Sidebar() {
                     localStorage.removeItem("userId");
                     window.location.href = "/login";
                 }}
-                className="mt-6 w-full text-sm text-red-400"
+                className="mt-6 w-full text-sm text-red-400 cursor-pointer"
             >
                 Logout
             </button>
