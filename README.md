@@ -155,6 +155,8 @@ store/
 ### AI Processing
 
 * `POST /api/gemini`
+  ![Image](https://github.com/user-attachments/assets/3f6549bd-94f8-4a8c-8096-572c68da4d4c)
+
 
   * Accepts structured text & image inputs
   * Calls Google Gemini API
